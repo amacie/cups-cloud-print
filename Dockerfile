@@ -1,7 +1,8 @@
 FROM phusion/baseimage:0.9.16
-MAINTAINER mnbf9rca mnbf9rca@gmx.com
+MAINTAINER amacie 
 
 ## cloned from gfjardim  / https://github.com/gfjardim/docker-containers / <gfjardim@gmail.com>
+## cloned from mnbf9rca  / https://github.com/mnbf9rca/cups-google-print
 
 #########################################
 ##        ENVIRONMENTAL CONFIG         ##
@@ -42,12 +43,15 @@ RUN add-apt-repository ppa:ubuntu-lxc/lxd-stable
 
 # Install Dependencies
 
+RUN wget -nv -O epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
+
 RUN apt-get update -qq \
 && apt-get install -qy --force-yes \
  cups \
  cups-pdf \
  whois \
- hplip \
+ lsb \
+# hplip \
  python-cups \
  inotify-tools \
  libcups2 \
@@ -65,6 +69,7 @@ RUN apt-get update -qq \
 && apt-get -qq -y autoremove \
 && apt-get -qq -y clean
 
+RUN dpkg -i epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
 
 ## install go (https://golang.org/doc/install)
 ## RUN wget -nv -O - https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz | tar -C /usr/local -xzf -
@@ -89,7 +94,8 @@ RUN chmod +x /tmp/*.sh \
 RUN mkdir -p /var/run/dbus \
 && mv -f /usr/lib/cups/backend/parallel /usr/lib/cups/backend-available/ || true \
 && mv -f /usr/lib/cups/backend/serial /usr/lib/cups/backend-available/ || true \
-&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* || true
+&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* || true \
+&& rm -f epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb || true
 
 
 #########################################
