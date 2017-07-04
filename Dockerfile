@@ -43,7 +43,7 @@ RUN add-apt-repository ppa:ubuntu-lxc/lxd-stable
 
 # Install Dependencies
 
-RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb \
+RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
 
 RUN apt-get update -qq \
 && apt-get install -qy --force-yes \
@@ -69,7 +69,7 @@ RUN apt-get update -qq \
 && apt-get -qq -y autoremove \
 && apt-get -qq -y clean
 
-RUN dpkg -i epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
+RUN dpkg -i /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
 
 ## install go (https://golang.org/doc/install)
 ## RUN wget -nv -O - https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz | tar -C /usr/local -xzf -
