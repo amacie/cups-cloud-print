@@ -1,5 +1,4 @@
 # cups-google-print
-> Please log issues on GitHub (https://github.com/mnbf9rca/cups-google-print), not here...
 
 Docker container with CUPS, Apple AirPrint and Google Cloud Print.
 
