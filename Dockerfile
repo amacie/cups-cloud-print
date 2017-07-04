@@ -43,7 +43,7 @@ RUN add-apt-repository ppa:ubuntu-lxc/lxd-stable
 
 # Install Dependencies
 
-RUN wget -nv -O epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
+RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb \
 
 RUN apt-get update -qq \
 && apt-get install -qy --force-yes \
@@ -51,7 +51,7 @@ RUN apt-get update -qq \
  cups-pdf \
  whois \
  lsb \
-# hplip \
+ hplip \
  python-cups \
  inotify-tools \
  libcups2 \
@@ -94,9 +94,7 @@ RUN chmod +x /tmp/*.sh \
 RUN mkdir -p /var/run/dbus \
 && mv -f /usr/lib/cups/backend/parallel /usr/lib/cups/backend-available/ || true \
 && mv -f /usr/lib/cups/backend/serial /usr/lib/cups/backend-available/ || true \
-&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* || true \
-&& rm -f epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb || true
-
+&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* || true 
 
 #########################################
 ##         EXPORTS AND VOLUMES         ##
