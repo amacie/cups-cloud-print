@@ -47,48 +47,26 @@ RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2
 
 RUN apt-get update -qq \
 && apt-get install -qy --force-yes \
+ curl \
  cups \
- cups-pdf \
- whois \
  lsb \
- hplip \
- python-cups \
- inotify-tools \
- libcups2 \
- libavahi-client3 \
- avahi-daemon \
- avahi-utils \
- libsnmp30 \
- golang \
- build-essential \
- libcups2-dev \
- libavahi-client-dev \
- git \
- bzr \
 && apt-get -qq -y autoclean \
 && apt-get -qq -y autoremove \
 && apt-get -qq -y clean
 
 RUN dpkg -i /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
 
-## install go (https://golang.org/doc/install)
-## RUN wget -nv -O - https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz | tar -C /usr/local -xzf -
+RUN curl -sSkL -o /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-ENV GOPATH=$HOME/go PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
-
-## uncomment if you want to check the version installed...
-## RUN go version
-
-
-## install google print connector
-RUN go get github.com/google/cloud-print-connector/...
-
+RUN dpkg -i /tmp/google-chrome-stable_current_amd64.deb \
+&& apt-get -qy -f install
 
 ADD * /tmp/
 RUN chmod +x /tmp/*.sh \
 && /tmp/install.sh \
-&& /tmp/make-avahi-autostart.sh \
-&& /tmp/make-gcp-autostart.sh
+#&& /tmp/make-avahi-autostart.sh \
+#&& /tmp/make-gcp-autostart.sh
+&& /tmp/chrome.sh
 
 # Create var/run/dbus, Disbale some cups backend that are unusable within a container, Clean install files
 RUN mkdir -p /var/run/dbus \
@@ -102,3 +80,4 @@ RUN mkdir -p /var/run/dbus \
 # Export volumes
 VOLUME /config /etc/cups/ /var/log/cups /var/spool/cups /var/cache/cups /var/run/dbus
 EXPOSE 631
+
