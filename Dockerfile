@@ -56,8 +56,7 @@ RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2
 RUN dpkg -i /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
 
 RUN curl -sSkL -o /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dpkg -i /tmp/google-chrome-stable_current_amd64.deb \
-&& apt-get -qy -f install
+RUN apt-get install -qy /tmp/google-chrome-stable_current_amd64.deb 
 
 ADD * /tmp/
 RUN chmod +x /tmp/*.sh \
