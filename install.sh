@@ -43,3 +43,7 @@ fi
 exec /usr/sbin/cupsd -f -c /config/cups/cupsd.conf
 EOT
 chmod +x /etc/service/cups/run
+
+# Add chrome to runit
+mkdir /etc/service/chrome
+mv /tmp/chrome.sh /etc/service/chrome/run
