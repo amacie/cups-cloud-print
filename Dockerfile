@@ -11,7 +11,7 @@ MAINTAINER amacie
 ENV HOME="/root" LC_ALL="C.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" DEBIAN_FRONTEND="noninteractive" TERM="xterm"
 
 # Use baseimage-docker's init system
-CMD ["/sbin/my_init"]
+CMD ["/sbin/runit"]
 
 
 
