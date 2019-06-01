@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.16
+FROM debian:stable-slim
 MAINTAINER amacie 
 
 ## cloned from gfjardim  / https://github.com/gfjardim/docker-containers / <gfjardim@gmail.com>
@@ -8,7 +8,7 @@ MAINTAINER amacie
 ##        ENVIRONMENTAL CONFIG         ##
 #########################################
 # Set correct environment variables
-ENV HOME="/root" LC_ALL="C.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" GIT_REPO="mnbf9rca/cups-google-print" DEBIAN_FRONTEND="noninteractive" TERM="xterm"
+ENV HOME="/root" LC_ALL="C.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" DEBIAN_FRONTEND="noninteractive" TERM="xterm"
 
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
@@ -35,15 +35,13 @@ RUN usermod -u 99 nobody \
 ## && add-apt-repository ppa:ubuntu-lxc/lxd-stable \
 ## && sed -i -e "s#http://[^\s]*archive.ubuntu[^\s]* #mirror://mirrors.ubuntu.com/mirrors.txt #g" /etc/apt/sources.list
 
-RUN add-apt-repository ppa:ubuntu-lxc/lxd-stable 
+## RUN add-apt-repository ppa:ubuntu-lxc/lxd-stable 
 ## <-- removing modification of sources host
 ## \
 ## && sed -i -e "s#http://[^\s]*archive.ubuntu[^\s]* #mirror://mirrors.ubuntu.com/mirrors.txt #g" /etc/apt/sources.list
 
 
 # Install Dependencies
-
-RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
 
 RUN apt-get update -qq \
 && apt-get install -qy --force-yes \
@@ -54,10 +52,10 @@ RUN apt-get update -qq \
 && apt-get -qq -y autoremove \
 && apt-get -qq -y clean
 
+RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
 RUN dpkg -i /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
 
 RUN curl -sSkL -o /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-
 RUN dpkg -i /tmp/google-chrome-stable_current_amd64.deb \
 && apt-get -qy -f install
 
