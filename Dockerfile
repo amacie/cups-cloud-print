@@ -48,15 +48,17 @@ RUN apt-get update -qq \
  curl \
  cups \
  lsb \
+ runit \
 && apt-get -qq -y autoclean \
 && apt-get -qq -y autoremove \
 && apt-get -qq -y clean
 
 RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
-RUN dpkg -i /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
-
 RUN curl -sSkL -o /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN apt-get install -qy /tmp/google-chrome-stable_current_amd64.deb 
+RUN apt-get install -qy /tmp/google-chrome-stable_current_amd64.deb /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb \
+&& apt-get -qq -y autoclean \
+&& apt-get -qq -y autoremove \
+&& apt-get -qq -y clean
 
 ADD * /tmp/
 RUN chmod +x /tmp/*.sh \
