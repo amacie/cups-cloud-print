@@ -1,12 +1,6 @@
 #!/bin/bash
 
 
-# Add AirPrint config tool
-curl -skL https://raw.github.com/tjfontaine/airprint-generate/master/airprint-generate.py /opt/airprint-generate.py -o /opt/airprint-generate.py
-chmod +x /opt/airprint-generate.py
-
-
-
 #########################################
 ##  FILES, SERVICES AND CONFIGURATION  ##
 #########################################
@@ -49,29 +43,3 @@ fi
 exec /usr/sbin/cupsd -f -c /config/cups/cupsd.conf
 EOT
 chmod +x /etc/service/cups/run
-
-
-
-# Add AirPrint to runit
-mkdir /etc/service/air_print
-cat <<'EOT' > /etc/service/air_print/run
-#!/bin/bash
-
-while [[ $(curl -sk localhost:631 >/dev/null; echo $?) -ne 0 ]]; do
-  sleep 1
-done
-
-/opt/airprint-generate.py -d /avahi
-
-inotifywait -m /config/cups/ppd -e create -e moved_to -e close_write|
-    while read path action file; do
-        echo "Printer ${file} modified, reloading Avahi services."
-        /opt/airprint-generate.py -d /avahi
-    done
-EOT
-
-cat <<'EOT' > /etc/service/air_print/finish
-#!/bin/bash
-rm -rf /avahi/AirPrint*
-EOT
-chmod +x /etc/service/air_print/*
