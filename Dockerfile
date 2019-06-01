@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM phusion/baseimage
 MAINTAINER amacie 
 
 ## cloned from gfjardim  / https://github.com/gfjardim/docker-containers / <gfjardim@gmail.com>
@@ -11,17 +11,12 @@ MAINTAINER amacie
 ENV HOME="/root" LC_ALL="C.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" DEBIAN_FRONTEND="noninteractive" TERM="xterm"
 
 # Use baseimage-docker's init system
-CMD ["/sbin/runit"]
+CMD ["/sbin/my_init"]
 
 #########################################
 ##         RUN INSTALL SCRIPT          ##
 #########################################
-# Configure user nobody to match unRAID's settings
-# RUN usermod -u 99 nobody \
-# && usermod -g 100 nobody \
-# && usermod -d /home nobody \
-# && chown -R nobody:users /home \
-# && rm -rf /etc/service/sshd /etc/service/cron /etc/service/syslog-ng /etc/my_init.d/00_regen_ssh_host_keys.sh
+RUN rm -rf /etc/service/sshd /etc/service/cron /etc/service/syslog-ng /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # Install Dependencies
 
@@ -30,7 +25,6 @@ RUN apt-get update -qq \
  curl \
  cups \
  lsb \
- runit \
  whois
 
 RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb
