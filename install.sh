@@ -45,5 +45,5 @@ EOT
 chmod +x /etc/service/cups/run
 
 # Add chrome to runit
-mkdir /etc/service/chrome
-mv /tmp/chrome.sh /etc/service/chrome/run
+# mkdir /etc/service/chrome
+# mv /tmp/chrome.sh /etc/service/chrome/run
