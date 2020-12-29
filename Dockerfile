@@ -1,4 +1,4 @@
-FROM phusion/baseimage
+FROM phusion/baseimage:18.04-1.0.0-amd64
 MAINTAINER amacie 
 
 ## cloned from gfjardim  / https://github.com/gfjardim/docker-containers / <gfjardim@gmail.com>
@@ -20,14 +20,14 @@ RUN rm -rf /etc/service/sshd /etc/service/cron /etc/service/syslog-ng /etc/my_in
 
 # Install Dependencies
 RUN curl -sSkL -o /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb http://download.ebz.epson.net/dsc/op/stable/debian/dists/lsb3.2/main/binary-amd64/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb \
-&& curl -sSkL -o /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+# && curl -sSkL -o /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
 && apt-get update -qq \
 && apt-get install -qy --force-yes \
  curl \
  cups \
  lsb \
  whois \
- /tmp/google-chrome-stable_current_amd64.deb \
+# /tmp/google-chrome-stable_current_amd64.deb \
  /tmp/epson-inkjet-printer-artisan-725-835-series_1.0.0-1lsb3.2_amd64.deb \
 && apt-get -qq -y autoclean \
 && apt-get -qq -y clean \
